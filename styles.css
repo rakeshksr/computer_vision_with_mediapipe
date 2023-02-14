@@ -1,0 +1,41 @@
+QMainWindow {
+    background-color: #e4ddf4;
+    
+}
+
+QPushButton {
+    /* background-color: #359580; */
+    color: #fff;
+    border-radius: 16px;
+    padding: 10px 20px;
+    margin-left: 20px;
+}
+
+/* QPushButton:hover {
+    background-color: #52ab98;
+} */
+
+QLabel {
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 5px;
+}
+
+QComboBox {
+    border: 1px solid #6a5d97;
+    border-radius: 12px;
+    padding: 8px 16px;
+}
+
+QComboBox::drop-down {
+    width: 25px;
+    border: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 3px;
+}
+
+QComboBox::down-arrow {
+    image: url('./assets/downarrow.png');
+    width: 25px;
+    height: 25px;
+}
