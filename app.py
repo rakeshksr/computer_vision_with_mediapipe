@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 
 import cv2
 
@@ -10,6 +11,8 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout,
 
 from ml_applications import MlApplications
 
+# For PyInstaller 
+PWD = Path(getattr(sys, "_MEIPASS", Path.cwd()))
 
 def convert_snake_case_to_title_case(snake_case_str: str) -> str:
     """
@@ -69,6 +72,8 @@ class MainWindow(QMainWindow):
         # Title and dimensions
         self.setWindowTitle("Compute Vision using Deep Learning")
         # self.setGeometry(0, 0, 800, 500)
+        wIcon = QIcon(str(PWD/"assets/app_icon.png"))
+        self.setWindowIcon(wIcon)
 
         # Create a label for the display camera
         self.label = QLabel(self)
@@ -81,6 +86,11 @@ class MainWindow(QMainWindow):
 
         self.combobox = QComboBox()
         self.combobox.addItems(ML_FUNCTIONS.keys())
+        qcb_icon = str(PWD).replace("\\", "/") + "/assets/downarrow.png" # QT CSS only accepting path with "/" seperator
+        self.combobox.setStyleSheet(f"""QComboBox::down-arrow {{
+            image: url({qcb_icon});
+            }}"""
+        )
 
         self.start_pause_button = QPushButton()
         self.handle_click()
@@ -104,7 +114,7 @@ class MainWindow(QMainWindow):
         self.combobox.currentTextChanged.connect(self.set_model)
 
         # Load the style sheet
-        with open("styles.css") as f:
+        with open(PWD/"styles.css") as f:
             self.setStyleSheet(f.read())
 
     @Slot()
@@ -117,18 +127,18 @@ class MainWindow(QMainWindow):
             self.start_detection()
             text = "Pause"
             bg_color = "#bb85f1"
-            icon = "./assets/pause_circle.png"
+            icon = PWD / "assets/pause_circle.png"
             cb = True
         else:
             if self.start_pause_button.text() != "":
                 self.pause_detection()
             text = "Start"
             bg_color = "#47c2a7"
-            icon = "./assets/play_circle.png"
+            icon = PWD / "assets/play_circle.png"
             cb = False
         self.start_pause_button.setText(text)
         self.start_pause_button.setStyleSheet(f"background-color: {bg_color};")
-        self.start_pause_button.setIcon(QIcon(icon))
+        self.start_pause_button.setIcon(QIcon(str(icon)))
         self.start_pause_button.setIconSize(QSize(25, 25))
         self.combobox.setEnabled(cb)
 

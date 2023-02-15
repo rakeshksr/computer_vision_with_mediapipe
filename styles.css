@@ -1,6 +1,5 @@
 QMainWindow {
-    background-color: #e4ddf4;
-    
+    background-color: #e4ddf4;  
 }
 
 QPushButton {
@@ -35,7 +34,7 @@ QComboBox::drop-down {
 }
 
 QComboBox::down-arrow {
-    image: url('./assets/downarrow.png');
+    /* image: url('./assets/downarrow.png'); */
     width: 25px;
     height: 25px;
 }
