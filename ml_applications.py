@@ -32,8 +32,6 @@ class MlApplications():
         self.mp_pose_detection = mp.solutions.pose
         self.pose_detection_model = None
 
-        self.segment_bgcolor = (192, 192, 192)  # gray
-        # self.segment_bgcolor = (255, 255, 255)  # white
         self.mp_selfie_segmentation = mp.solutions.selfie_segmentation
         self.selfie_segmentation_model = None
 
@@ -240,7 +238,6 @@ class MlApplications():
         results = self.selfie_segmentation_model.process(frame_rgb)
         frame_rgb.flags.writeable = True
         condition = np.stack((results.segmentation_mask,) * 3, axis=-1) > 0.1
-        bg_image = np.zeros(frame_rgb.shape, dtype=np.uint8)
-        bg_image[:] = self.segment_bgcolor
+        bg_image = cv2.blur(frame_rgb, (20,20))
         frame_rgb = np.where(condition, frame_rgb, bg_image)
         return frame_rgb
