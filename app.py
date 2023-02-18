@@ -70,7 +70,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         # Title and dimensions
-        self.setWindowTitle("Compute Vision using Deep Learning")
+        self.setWindowTitle("AI Vision")
         # self.setGeometry(0, 0, 800, 500)
         wIcon = QIcon(str(PWD/"assets/app_icon.png"))
         self.setWindowIcon(wIcon)
