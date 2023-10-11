@@ -6,10 +6,13 @@
 ![2](./previews/2.png)
 
 ![3](./previews/3.png)
-## Building Binary
 
-```pyinstaller --clean --onefile --windowed --name AIVision  --add-data "styles.css;."  --add-data "assets;assets" --icon "./assets/app_icon.png" --collect-data "mediapipe" app.py```
+## Building Steps
 
-or
+1. Install dependecies: `pip install -r requirements.txt`
+2. Install pyinstaller: `pip install pyinstaller`
+3.  ```pyinstaller --clean --onefile --windowed --name AIVision  --add-data "styles.css;."  --add-data "assets;assets" --icon "./assets/app_icon.png" --collect-data "mediapipe" app.py```
 
-```pyinstaller AIVision.spec```
+    or
+
+    ```pyinstaller AIVision.spec```
