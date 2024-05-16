@@ -35,3 +35,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# Models
+*.task
+*.tflite

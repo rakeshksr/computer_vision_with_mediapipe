@@ -2,17 +2,24 @@ import sys
 from pathlib import Path
 
 import cv2
-
-from PySide6.QtCore import Qt, QSize, QThread, Signal, Slot
+from PySide6.QtCore import QSize, Qt, QThread, Signal, Slot
 from PySide6.QtGui import QIcon, QImage, QPixmap
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout,
-                               QLabel, QMainWindow, QPushButton,
-                               QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (
+    QApplication,
+    QComboBox,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
 
 from ml_applications import MlApplications
 
-# For PyInstaller 
+# For PyInstaller
 PWD = Path(getattr(sys, "_MEIPASS", Path.cwd()))
+
 
 def convert_snake_case_to_title_case(snake_case_str: str) -> str:
     """
@@ -30,7 +37,8 @@ def convert_snake_case_to_title_case(snake_case_str: str) -> str:
 ML_FUNCTIONS = {
     convert_snake_case_to_title_case(attribute): attribute
     for attribute in dir(MlApplications)
-    if callable(getattr(MlApplications, attribute)) and attribute.startswith('__') is False
+    if callable(getattr(MlApplications, attribute))
+    and attribute.startswith("_") is False
 }
 
 
@@ -54,7 +62,9 @@ class Thread(QThread):
             if not ret:
                 continue
             func = getattr(self.mla, self.detect_function)
-            output_image = func(frame)
+            # Flip the image horizontally for a later selfie-view display, and convert the BGR image to RGB.
+            frame_rgb = cv2.cvtColor(cv2.flip(frame, 1), cv2.COLOR_BGR2RGB)
+            output_image = func(frame_rgb)
 
             # Creating and scaling QImage
             h, w, ch = output_image.shape
@@ -72,7 +82,7 @@ class MainWindow(QMainWindow):
         # Title and dimensions
         self.setWindowTitle("AI Vision")
         # self.setGeometry(0, 0, 800, 500)
-        wIcon = QIcon(str(PWD/"assets/app_icon.png"))
+        wIcon = QIcon(str(PWD / "assets/app_icon.png"))
         self.setWindowIcon(wIcon)
 
         # Create a label for the display camera
@@ -86,11 +96,12 @@ class MainWindow(QMainWindow):
 
         self.combobox = QComboBox()
         self.combobox.addItems(ML_FUNCTIONS.keys())
-        qcb_icon = str(PWD).replace("\\", "/") + "/assets/downarrow.png" # QT CSS only accepting path with "/" seperator
+        qcb_icon = (
+            str(PWD).replace("\\", "/") + "/assets/downarrow.png"
+        )  # QT CSS only accepting path with "/" seperator
         self.combobox.setStyleSheet(f"""QComboBox::down-arrow {{
             image: url({qcb_icon});
-            }}"""
-        )
+            }}""")
 
         self.start_pause_button = QPushButton()
         self.handle_click()
@@ -114,7 +125,7 @@ class MainWindow(QMainWindow):
         self.combobox.currentTextChanged.connect(self.set_model)
 
         # Load the style sheet
-        with open(PWD/"styles.css") as f:
+        with open(PWD / "styles.css") as f:
             self.setStyleSheet(f.read())
 
     @Slot()
