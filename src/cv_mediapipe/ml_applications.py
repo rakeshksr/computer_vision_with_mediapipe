@@ -16,12 +16,6 @@ from cv_mediapipe.utils import (
 
 class MlApplications:
     def __init__(self):
-        self.mp_drawing = mp.solutions.drawing_utils
-        self.mp_drawing_styles = mp.solutions.drawing_styles
-        self.drawing_spec = self.mp_drawing.DrawingSpec(
-            thickness=1,
-            circle_radius=1,
-        )
         self.face_detection_model = None
         self.face_mesh_model = None
         self.hand_landmarks_detection_model = None
@@ -35,7 +29,9 @@ class MlApplications:
 
     def face_detection(self, frame_rgb):
         if self.face_detection_model is None:
-            base_options = python.BaseOptions(model_asset_path= ASSETS_PATH / "face_detector.tflite")
+            base_options = python.BaseOptions(
+                model_asset_path=ASSETS_PATH / "face_detector.tflite"
+            )
             options = vision.FaceDetectorOptions(
                 base_options=base_options,
             )
@@ -50,7 +46,7 @@ class MlApplications:
     def face_mesh_detection(self, frame_rgb):
         if self.face_mesh_model is None:
             base_options = python.BaseOptions(
-                model_asset_path= ASSETS_PATH / "face_landmarker_with_blendshapes.task"
+                model_asset_path=ASSETS_PATH / "face_landmarker_with_blendshapes.task"
             )
             options = vision.FaceLandmarkerOptions(
                 base_options=base_options,
@@ -67,7 +63,9 @@ class MlApplications:
 
     def hand_landmarks_detection(self, frame_rgb):
         if self.hand_landmarks_detection_model is None:
-            base_options = python.BaseOptions(model_asset_path= ASSETS_PATH / "hand_landmarker.task")
+            base_options = python.BaseOptions(
+                model_asset_path=ASSETS_PATH / "hand_landmarker.task"
+            )
             options = vision.HandLandmarkerOptions(
                 base_options=base_options,
                 num_hands=2,
@@ -88,7 +86,7 @@ class MlApplications:
     def pose_detection(self, frame_rgb):
         if self.pose_detection_model is None:
             base_options = python.BaseOptions(
-                model_asset_path= ASSETS_PATH / "pose_landmarker.task"
+                model_asset_path=ASSETS_PATH / "pose_landmarker.task"
             )
             options = vision.PoseLandmarkerOptions(
                 base_options=base_options,
@@ -105,7 +103,9 @@ class MlApplications:
 
     def selfie_segmention(self, frame_rgb):
         if self.selfie_segmentation_model is None:
-            base_options = python.BaseOptions(model_asset_path= ASSETS_PATH / "deeplab_v3.tflite")
+            base_options = python.BaseOptions(
+                model_asset_path=ASSETS_PATH / "deeplab_v3.tflite"
+            )
             options = vision.ImageSegmenterOptions(
                 base_options=base_options,
                 output_category_mask=True,
@@ -123,7 +123,9 @@ class MlApplications:
 
     def object_detection(self, frame_rgb):
         if self.object_detetction_model is None:
-            base_options = python.BaseOptions(model_asset_path= ASSETS_PATH / "efficientdet.tflite")
+            base_options = python.BaseOptions(
+                model_asset_path=ASSETS_PATH / "efficientdet.tflite"
+            )
             options = vision.ObjectDetectorOptions(
                 base_options=base_options,
                 score_threshold=0.5,
