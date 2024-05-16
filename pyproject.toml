@@ -1,0 +1,65 @@
+[project]
+name = "cv-mediapipe"
+description = "Computer Vision with MediaPipe"
+authors = [
+    { name = "rakeshksr", email = "rakeshksr@users.noreply.github.com" }
+]
+maintainers = [
+    { name = "rakeshksr", email = "rakeshksr@users.noreply.github.com" }
+]
+classifiers = [
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development",
+]
+dependencies = [
+    "mediapipe>=0.10.14",
+    "opencv-python>=4.9.0.80",
+    "pyside6>=6.7.0",
+    "numpy>=1.26.4",
+    "build>=1.2.1",
+]
+readme = "README.md"
+requires-python = ">= 3.10"
+dynamic = ["version"]
+
+[project.gui-scripts]
+cv_mediapipe = "cv_mediapipe.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pyinstaller>=6.6.0",
+]
+
+[tool.hatch.version]
+path = "src/cv_mediapipe/__init__.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cv_mediapipe"]
+artifacts = [
+  "*.tflite",
+  "*.task",
+]
+
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "download_models.py"
+dependencies = [
+  "requests"
+]

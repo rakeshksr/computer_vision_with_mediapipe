@@ -1,21 +1,18 @@
 # -*- mode: python ; coding: utf-8 -*-
-from PyInstaller.utils.hooks import collect_data_files
-
-datas = [('styles.css', '.'), ('assets', 'assets')]
-datas += collect_data_files('mediapipe')
 
 
 a = Analysis(
-    ['app.py'],
+    ['src\\cv_mediapipe\\__main__.py'],
     pathex=[],
     binaries=[],
-    datas=datas,
+    datas=[('src/cv_mediapipe/assets', 'assets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
     noarchive=False,
+    optimize=0,
 )
 pyz = PYZ(a.pure)
 
@@ -38,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['assets\\app_icon.png'],
+    icon=['src\\cv_mediapipe\\assets\\app_icon.png'],
 )

@@ -1,4 +1,4 @@
-# Computer Vision with [MediaPipe](https://developers.google.com/mediapipe)
+# Computer Vision with [MediaPipe](https://ai.google.dev/edge/mediapipe)
 
 ## Previews
 ![1](./previews/1.png)
@@ -9,9 +9,9 @@
 
 ## Building Steps
 
-1. Install dependecies: `pip install -r requirements.txt`
-2. Install pyinstaller: `pip install pyinstaller`
-3.  ```pyinstaller --clean --onefile --windowed --name AIVision  --add-data "styles.css;."  --add-data "assets;assets" --icon "./assets/app_icon.png" --collect-data "mediapipe" app.py```
+1. Install [Rye](https://rye-up.com/guide/installation/)
+2. Sync project: `rye sync`
+3. ```pyinstaller --clean --onefile --windowed --name AIVision  --add-data "src/cv_mediapipe/assets;assets" --icon "src/cv_mediapipe/assets/app_icon.png" src/cv_mediapipe/__main__.py```
 
     or
 

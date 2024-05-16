@@ -1,11 +1,9 @@
 import sys
-from pathlib import Path
 
 import cv2
 from PySide6.QtCore import QSize, Qt, QThread, Signal, Slot
 from PySide6.QtGui import QIcon, QImage, QPixmap
 from PySide6.QtWidgets import (
-    QApplication,
     QComboBox,
     QHBoxLayout,
     QLabel,
@@ -15,10 +13,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from ml_applications import MlApplications
-
-# For PyInstaller
-PWD = Path(getattr(sys, "_MEIPASS", Path.cwd()))
+from cv_mediapipe.ml_applications import MlApplications
+from cv_mediapipe.apath import ASSETS_PATH
 
 
 def convert_snake_case_to_title_case(snake_case_str: str) -> str:
@@ -82,7 +78,7 @@ class MainWindow(QMainWindow):
         # Title and dimensions
         self.setWindowTitle("AI Vision")
         # self.setGeometry(0, 0, 800, 500)
-        wIcon = QIcon(str(PWD / "assets/app_icon.png"))
+        wIcon = QIcon(str(ASSETS_PATH / "app_icon.png"))
         self.setWindowIcon(wIcon)
 
         # Create a label for the display camera
@@ -97,7 +93,7 @@ class MainWindow(QMainWindow):
         self.combobox = QComboBox()
         self.combobox.addItems(ML_FUNCTIONS.keys())
         qcb_icon = (
-            str(PWD).replace("\\", "/") + "/assets/downarrow.png"
+            str(ASSETS_PATH).replace("\\", "/") + "/downarrow.png"
         )  # QT CSS only accepting path with "/" seperator
         self.combobox.setStyleSheet(f"""QComboBox::down-arrow {{
             image: url({qcb_icon});
@@ -125,7 +121,7 @@ class MainWindow(QMainWindow):
         self.combobox.currentTextChanged.connect(self.set_model)
 
         # Load the style sheet
-        with open(PWD / "styles.css") as f:
+        with open(ASSETS_PATH / "styles.css") as f:
             self.setStyleSheet(f.read())
 
     @Slot()
@@ -138,14 +134,14 @@ class MainWindow(QMainWindow):
             self.start_detection()
             text = "Pause"
             bg_color = "#bb85f1"
-            icon = PWD / "assets/pause_circle.png"
+            icon = ASSETS_PATH / "pause_circle.png"
             cb = True
         else:
             if self.start_pause_button.text() != "":
                 self.pause_detection()
             text = "Start"
             bg_color = "#47c2a7"
-            icon = PWD / "assets/play_circle.png"
+            icon = ASSETS_PATH / "play_circle.png"
             cb = False
         self.start_pause_button.setText(text)
         self.start_pause_button.setStyleSheet(f"background-color: {bg_color};")
@@ -168,10 +164,3 @@ class MainWindow(QMainWindow):
     @Slot(QImage)
     def setImage(self, image):
         self.label.setPixmap(QPixmap.fromImage(image))
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())
