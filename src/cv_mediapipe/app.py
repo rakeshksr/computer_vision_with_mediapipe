@@ -90,7 +90,7 @@ class MainWindow(QMainWindow):
         self.th.finished.connect(self.close)
         self.th.updateFrame.connect(self.setImage)
 
-        self.combobox = QComboBox()
+        self.combobox = QComboBox(enabled=False)
         self.combobox.addItems(ML_FUNCTIONS.keys())
         qcb_icon = (
             str(ASSETS_PATH).replace("\\", "/") + "/downarrow.png"
@@ -99,12 +99,24 @@ class MainWindow(QMainWindow):
             image: url({qcb_icon});
             }}""")
 
-        self.start_pause_button = QPushButton()
-        self.handle_click()
+        self.start_button = QPushButton(
+            "Start",
+            objectName="start",
+            icon=QIcon(str(ASSETS_PATH / "play_circle.png")),
+            iconSize=QSize(25, 25),
+        )
+        self.pause_button = QPushButton(
+            "Pause",
+            objectName="pause",
+            icon=QIcon(str(ASSETS_PATH / "pause_circle.png")),
+            iconSize=QSize(25, 25),
+            visible=False,
+        )
 
         right_layout = QHBoxLayout()
         right_layout.addWidget(self.combobox, stretch=3)
-        right_layout.addWidget(self.start_pause_button, stretch=1)
+        right_layout.addWidget(self.start_button, stretch=1)
+        right_layout.addWidget(self.pause_button, stretch=1)
 
         # Main layout
         layout = QVBoxLayout()
@@ -117,7 +129,8 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
 
         # Interactions
-        self.start_pause_button.clicked.connect(self.handle_click)
+        self.start_button.clicked.connect(self.start_button_handle_click)
+        self.pause_button.clicked.connect(self.pause_button_handle_click)
         self.combobox.currentTextChanged.connect(self.set_model)
 
         # Load the style sheet
@@ -129,37 +142,20 @@ class MainWindow(QMainWindow):
         self.th.set_detect_function(text)
 
     @Slot()
-    def handle_click(self):
-        if self.start_pause_button.text() == "Start":
-            self.start_detection()
-            text = "Pause"
-            bg_color = "#bb85f1"
-            icon = ASSETS_PATH / "pause_circle.png"
-            cb = True
-        else:
-            if self.start_pause_button.text() != "":
-                self.pause_detection()
-            text = "Start"
-            bg_color = "#47c2a7"
-            icon = ASSETS_PATH / "play_circle.png"
-            cb = False
-        self.start_pause_button.setText(text)
-        self.start_pause_button.setStyleSheet(f"background-color: {bg_color};")
-        self.start_pause_button.setIcon(QIcon(str(icon)))
-        self.start_pause_button.setIconSize(QSize(25, 25))
-        self.combobox.setEnabled(cb)
-
-    @Slot()
-    def pause_detection(self):
-        # print("Finishing...")
-        self.th.set_detect_function("No Detection")
-
-    @Slot()
-    def start_detection(self):
-        # print("Starting...")
+    def start_button_handle_click(self):
         self.th.set_detect_function(self.combobox.currentText())
         if not self.th.isRunning():
             self.th.start()
+        self.start_button.setVisible(False)
+        self.pause_button.setVisible(True)
+        self.combobox.setEnabled(True)
+
+    @Slot()
+    def pause_button_handle_click(self):
+        self.th.set_detect_function("No Detection")
+        self.start_button.setVisible(True)
+        self.pause_button.setVisible(False)
+        self.combobox.setEnabled(False)
 
     @Slot(QImage)
     def setImage(self, image):

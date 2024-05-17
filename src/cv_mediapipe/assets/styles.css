@@ -1,18 +1,29 @@
 QMainWindow {
-    background-color: #e4ddf4;  
+    background-color: #e4ddf4;
 }
 
 QPushButton {
-    /* background-color: #359580; */
     color: #fff;
     border-radius: 16px;
     padding: 10px 20px;
     margin-left: 20px;
 }
 
-/* QPushButton:hover {
-    background-color: #52ab98;
-} */
+QPushButton#start {
+    background-color: #47c2a7;
+}
+
+QPushButton#start:hover {
+    background-color: #319680;
+}
+
+QPushButton#pause {
+    background-color: #bb85f1;
+}
+
+QPushButton#pause:hover {
+    background-color: #9759d4;
+}
 
 QLabel {
     border-radius: 5px;
@@ -34,7 +45,6 @@ QComboBox::drop-down {
 }
 
 QComboBox::down-arrow {
-    /* image: url('./assets/downarrow.png'); */
     width: 25px;
     height: 25px;
 }
