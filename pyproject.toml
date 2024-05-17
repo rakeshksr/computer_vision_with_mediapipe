@@ -44,6 +44,10 @@ dev-dependencies = [
     "pyinstaller>=6.6.0",
 ]
 
+[tool.rye.scripts]
+pyinstaller = "pyinstaller AIVision.spec"
+packager = "cargo-packager --release"
+
 [tool.hatch.version]
 path = "src/cv_mediapipe/__init__.py"
 

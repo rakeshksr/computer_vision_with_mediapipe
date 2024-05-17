@@ -1,0 +1,10 @@
+name = "cv-mediapipe"
+product-name = "Computer Vision with MediaPipe"
+version = "0.1.0"
+binaries = [{ path = "AIVision", main = true }]
+identifier = "com.mediapipe.aivision"
+before-packaging-command = "pyinstaller AIVision.spec"
+out-dir = "dist/bin"
+binaries-dir = "dist"
+# resources = ["src/cv_mediapipe/assets/app_icon.png"]
+icons = ["src/cv_mediapipe/assets/app_icon.png"]
