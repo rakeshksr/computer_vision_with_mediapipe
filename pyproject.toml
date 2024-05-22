@@ -45,8 +45,8 @@ dev-dependencies = [
 ]
 
 [tool.rye.scripts]
-pyinstaller = "pyinstaller AIVision.spec"
-packager = "cargo-packager --release"
+build-binary = "pyinstaller --clean --onefile --windowed --name AIVision --add-data src/cv_mediapipe/assets;assets --icon src/cv_mediapipe/assets/app_icon.png src/cv_mediapipe/__main__.py"
+build-installer = "cargo-packager --release"
 
 [tool.hatch.version]
 path = "src/cv_mediapipe/__init__.py"

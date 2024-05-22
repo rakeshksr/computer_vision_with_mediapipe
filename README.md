@@ -11,8 +11,12 @@
 
 1. Install [Rye](https://rye-up.com/guide/installation/)
 2. Sync project: `rye sync`
-3. ```pyinstaller --clean --onefile --windowed --name AIVision  --add-data "src/cv_mediapipe/assets;assets" --icon "src/cv_mediapipe/assets/app_icon.png" src/cv_mediapipe/__main__.py```
+3. Activate environment
+    * On Windows, run: `.venv\Scripts\activate/`
+    * On Unix or MacOS, run: `source .venv/bin/activate`
+4.
+    1. To build installer: `rye run build-installer`
+    2. To build binary: `rye run build-binary`
 
-    or
-
-    ```pyinstaller AIVision.spec```
+> [!NOTE]
+> [cargo-packager](https://github.com/crabnebula-dev/cargo-packager) is required to build installer
