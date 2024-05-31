@@ -45,7 +45,7 @@ dev-dependencies = [
 ]
 
 [tool.rye.scripts]
-build-binary = "pyinstaller --clean --onefile --windowed --name AIVision --add-data src/cv_mediapipe/assets;assets --icon src/cv_mediapipe/assets/app_icon.png src/cv_mediapipe/__main__.py"
+build-binary = "pyinstaller --clean --onefile --windowed --name AIVision --add-data src/cv_mediapipe/assets:assets --icon src/cv_mediapipe/assets/app_icon.png src/cv_mediapipe/__main__.py"
 build-installer = "cargo-packager --release"
 
 [tool.hatch.version]
